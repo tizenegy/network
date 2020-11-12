@@ -1,2 +1,2 @@
 # network
-Design a Twitter-like social network website for making posts and following users.
+A Twitter-like social network website for making posts and following users.
