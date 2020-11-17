@@ -3,27 +3,23 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
-    username = models.CharField(
-        max_length=64,
+    # followers
+    # posts
+    def __str__(self):
+        return f"{self.username}"
+
+class Post(models.Model):
+    content = models.TextField(
+        max_length=1024,
         null=False
     )
-    # followers
-    # following
-    # posts)
-
-# class Post(models.Model):
-#     pass
+    created = models.DateTimeField(
+        auto_now_add=True
+    )
+    likes = models.IntegerField(
+        default=0,
+        null=False
+    )
     # user
-    # content
-    # creation_datetime
-    # likes
-
-    # def __str__(self):
-    #     return f"Listing: {self.listing} | User: {self.user}"
-
-    # def serialize(self):
-    # return {
-    #     "id": self.id,
-    #     "sender": self.sender.email,
-    # }
+    def __str__(self):
+        return f"Posted by someone on {self.created}"
