@@ -1,5 +1,20 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
+    <div id="compose-view">
+        <h3>New Post</h3>
+        <form id="compose-form" onsubmit="return false">
+            <div class="form-group">
+                OP: <input disabled class="form-control" id="compose-op" value="{{ request.user.username }}">
+            </div>
+            <textarea class="form-control" id="compose-body" placeholder="Content"></textarea>
+            <input type="submit" class="btn btn-primary"/>
+        </form>
+    </div>
+    
     TODO
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/network.js' %}"></script>
 {% endblock %}
