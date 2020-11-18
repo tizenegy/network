@@ -3,8 +3,11 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
-from .models import User
+from .models import User, Following, Post
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+import json
+from django.http import JsonResponse
 
 
 def index(request):
@@ -61,3 +64,19 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+@csrf_exempt
+@login_required
+def compose(request):
+    if request.method != "POST":
+        return JsonResponse(
+            {"error": "POST request required."}, 
+            status=400
+            )
+    data = json.loads(request.body)
+    post = Post(
+        op = data.get("op", ""),
+        content = data.get("content", "")
+    )
+    post.save()
+    return JsonResponse({"message": "Post successful."}, status=201)

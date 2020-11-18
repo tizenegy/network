@@ -47,3 +47,11 @@ class Post(models.Model):
         )
     def __str__(self):
         return f"Posted by someone on {self.created}"
+    def serialize(self):
+        return {
+            "id": self.id,
+            "op": self.op,
+            "content": self.content,
+            "likes": self.likes,
+            "created": self.created.strftime("%c")
+        }
