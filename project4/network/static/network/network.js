@@ -15,5 +15,5 @@ async function send_post(){
     })
     });
     const json = await response.json();
-    load_mailbox('sent');
+    console.log(json)
 }

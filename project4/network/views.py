@@ -74,8 +74,9 @@ def compose(request):
             status=400
             )
     data = json.loads(request.body)
+    user = User.objects.get(username=data.get("op", ""))
     post = Post(
-        op = data.get("op", ""),
+        op = user,
         content = data.get("content", "")
     )
     post.save()
