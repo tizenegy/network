@@ -3,10 +3,29 @@ from django.db import models
 
 
 class User(AbstractUser):
-    # followers
-    # posts
+    following = models.ManyToManyField(
+        'self',
+        through='Following',
+        symmetrical=False,
+        related_name='followers'
+    )
+
     def __str__(self):
         return f"{self.username}"
+
+class Following(models.Model):
+    from_User_id = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE,
+        null=True,
+        related_name="follower"
+        )
+    to_User_id = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE,
+        null=True,
+        related_name="followed_by"
+        )
 
 class Post(models.Model):
     content = models.TextField(
@@ -20,6 +39,11 @@ class Post(models.Model):
         default=0,
         null=False
     )
-    # user
+    op = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE,
+        null=True,
+        related_name="posts"
+        )
     def __str__(self):
         return f"Posted by someone on {self.created}"
