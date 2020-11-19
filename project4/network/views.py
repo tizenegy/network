@@ -95,3 +95,16 @@ def compose(request):
     )
     post.save()
     return JsonResponse({"message": "Post successful."}, status=201)
+
+@csrf_exempt
+@login_required
+def feed(request):
+    if request.method != "GET":
+        return JsonResponse(
+            {"error": "GET request required."}, 
+            status=400
+            )
+    data = Post.objects.all()
+    posts = data.order_by("-created").all()
+    json_response = [post.serialize() for post in posts]
+    return JsonResponse(json_response, safe=False)

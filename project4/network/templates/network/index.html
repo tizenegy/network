@@ -6,29 +6,27 @@
     <div id="success-top" class="alert alert-success" role="alert">
         Posted successfully!
     </div>
-
+    <h3>New Post</h3>
     {% if user.is_authenticated %}
         <div class="container">
             <div id="compose-view">
-                <h3>New Post</h3>
                 <form id="compose-form" onsubmit="return false">
                     <div class="col-xs-2">
                     {{ new_post_form.as_p }}
                     </div>
-                    {% comment %} <textarea class="form-control" id="compose-body" placeholder="Content"></textarea> {% endcomment %}
                     <input type="submit" class="btn btn-primary"/>
                 </form>
             </div>
         </div>
     {% endif %}
-
+    <h3>All posts</h3>
     <div>
-        All posts
+        
     </div>
 
-<!-- Light circle button with ripple effect -->
-<button class="btn pmd-btn-fab pmd-ripple-effect btn-light" type="button"><i class="material-icons pmd-sm">add</i></button>
-
+    <a href="#" class="float">
+        <i class="fas fa-pen my-float"></i>
+    </a>
 
 {% endblock %}
 
