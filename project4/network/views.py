@@ -8,10 +8,24 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 import json
 from django.http import JsonResponse
+from django import forms
 
+# forms
+class NewPostForm(forms.Form):
+    md_text = forms.CharField(label="", widget=forms.Textarea(attrs={
+        'placeholder':'Enter your text here.',
+        'class': 'form-control',
+        'id': 'compose-body',
+        'rows':3, 
+        # 'cols':20
+        }))
+
+# views
 
 def index(request):
-    return render(request, "network/index.html")
+    return render(request, "network/index.html", {
+        "new_post_form": NewPostForm()
+    })
 
 
 def login_view(request):
@@ -74,7 +88,7 @@ def compose(request):
             status=400
             )
     data = json.loads(request.body)
-    user = User.objects.get(username=data.get("op", ""))
+    user = request.user
     post = Post(
         op = user,
         content = data.get("content", "")
