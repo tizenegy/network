@@ -13,7 +13,7 @@
         <div class="container">
             <div id="compose-view">
                 <form id="compose-form" onsubmit="return false">
-                    <div class="col-xs-2">
+                    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
                     {{ new_post_form.as_p }}
                     </div>
                     <input type="submit" class="btn btn-primary"/>
@@ -24,7 +24,9 @@
     {% endif %}
 
     <div id="all-posts-feed">
-    <h3>All posts</h3>
+        <h3>All posts</h3>
+        <div id="all-posts-feed-inner"
+        </div>
     </div>
 
     <a id="new-post-button" href="#" class="float">

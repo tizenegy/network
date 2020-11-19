@@ -50,7 +50,7 @@ class Post(models.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "op": self.op,
+            "op": self.op.username,
             "content": self.content,
             "likes": self.likes,
             "created": self.created.strftime("%c")
