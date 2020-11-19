@@ -1,11 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // default visibility
     document.querySelector('#success-top').style.display = 'none';
+    document.querySelector('#new-post-form').style.display = 'none';
+    document.querySelector('#all-posts-feed').style.display = 'block';
+
+    // buttons
     document.querySelector('#all-posts-button').addEventListener('click', ()=> {
-        console.log("clicked");
+        document.querySelector('#all-posts-feed').style.display = 'block';
+    });
+    document.querySelector('#new-post-button').addEventListener('click', ()=> {
+        form = document.querySelector('#new-post-form');
+        form.style.display === 'block' ? form.style.display = 'none' : form.style.display = 'block';
     });
     document.querySelector('#compose-form').addEventListener('submit', (event) => {
         event.preventDefault();
         send_post();
+        document.querySelector('#new-post-form').style.display = 'none';
       });
 });
 

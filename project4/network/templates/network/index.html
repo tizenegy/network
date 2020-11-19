@@ -6,8 +6,10 @@
     <div id="success-top" class="alert alert-success" role="alert">
         Posted successfully!
     </div>
-    <h3>New Post</h3>
+
     {% if user.is_authenticated %}
+    <div id="new-post-form">
+        <h3>New Post</h3>
         <div class="container">
             <div id="compose-view">
                 <form id="compose-form" onsubmit="return false">
@@ -18,13 +20,14 @@
                 </form>
             </div>
         </div>
+    </div>
     {% endif %}
+
+    <div id="all-posts-feed">
     <h3>All posts</h3>
-    <div>
-        
     </div>
 
-    <a href="#" class="float">
+    <a id="new-post-button" href="#" class="float">
         <i class="fas fa-pen my-float"></i>
     </a>
 
