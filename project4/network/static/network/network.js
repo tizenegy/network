@@ -1,25 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
     // default visibility
+    document.querySelector('#loader').style.display = 'block';
     document.querySelector('#success-top').style.display = 'none';
-    document.querySelector('#new-post-form').style.display = 'none';
     document.querySelector('#all-posts-feed').style.display = 'block';
 
     // load content
     get_all_posts();
+    document.querySelector('#loader').style.display = 'none';
 
     // buttons
     document.querySelector('#all-posts-button').addEventListener('click', ()=> {
+        document.querySelector('#loader').style.display = 'block';
         get_all_posts();
         document.querySelector('#all-posts-feed').style.display = 'block';
-    });
-    document.querySelector('#new-post-button').addEventListener('click', ()=> {
-        form = document.querySelector('#new-post-form');
-        form.style.display === 'block' ? form.style.display = 'none' : form.style.display = 'block';
+        document.querySelector('#loader').style.display = 'none';
     });
     document.querySelector('#compose-form').addEventListener('submit', (event) => {
         event.preventDefault();
+        document.querySelector('#loader').style.display = 'block';
         send_post();
-        document.querySelector('#new-post-form').style.display = 'none';
+        cancel_button = document.querySelector('#cancel-new-post-modal');
+        cancel_button.click();
+        // document.querySelector('#new-post-form').style.display = 'none';
       });
 });
 
@@ -33,9 +35,11 @@ async function send_post(){
     const json = await response.json();
     console.log(response.status);
     document.querySelector('#compose-body').value = "";
-    document.querySelector('#success-top').style.display = 'block';
+    document.querySelector('#loader').style.display = 'block';
+    // document.querySelector('#success-top').style.display = 'block';
     setTimeout(() =>  get_all_posts(), 3000);
-    setTimeout(() => document.querySelector('#success-top').style.display = 'none', 3000);
+    // setTimeout(() => document.querySelector('#success-top').style.display = 'none', 3000);
+    document.querySelector('#loader').style.display = 'none';
 }
 
 function get_all_posts(){
@@ -51,6 +55,7 @@ function get_all_posts(){
             document.querySelector('#all-posts-feed-inner').append(element);
         } else {
             posts.forEach(post => {
+                // prepare card
                 const wrapper = document.createElement('div');
                 const card = document.createElement('div');
                 const card_body = document.createElement('div');
@@ -59,11 +64,24 @@ function get_all_posts(){
                 card_body.className = 'card-body';
                 card.appendChild(card_body);
                 wrapper.appendChild(card);
-
-                const element = document.createElement('div');
-                element.className = 'card-text';
-                element.innerHTML = `${post.content}`;
-                card_body.appendChild(element);
+                // fill card with content
+                const header = document.createElement('div');
+                const content = document.createElement('div');
+                const likes = document.createElement('div');
+                const footer = document.createElement('div');
+                header.className = 'card-header';
+                content.className = 'card-text';
+                likes.className = 'card-text';
+                footer.className = 'card-footer';
+                header.innerHTML = `${post.op}`;
+                content.innerHTML = `${post.content}`;
+                likes.innerHTML = `${post.likes} likes`;
+                footer.innerHTML = `${post.created}`;
+                likes.style.textAlign = "right";
+                card.prepend(header);
+                card_body.appendChild(content);
+                card_body.appendChild(likes);
+                card.appendChild(footer);
 
                 document.querySelector('#all-posts-feed-inner').append(wrapper);
             });

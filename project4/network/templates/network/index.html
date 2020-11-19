@@ -7,21 +7,9 @@
         Posted successfully!
     </div>
 
-    {% if user.is_authenticated %}
-    <div id="new-post-form">
-        <h3>New Post</h3>
-        <div class="container">
-            <div id="compose-view">
-                <form id="compose-form" onsubmit="return false">
-                    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-                    {{ new_post_form.as_p }}
-                    </div>
-                    <input type="submit" class="btn btn-primary"/>
-                </form>
-            </div>
-        </div>
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+        <div class="loader" id="loader">Loading...</div>
     </div>
-    {% endif %}
 
     <div id="all-posts-feed">
         <h3>All posts</h3>
@@ -29,9 +17,37 @@
         </div>
     </div>
 
-    <a id="new-post-button" href="#" class="float">
+    {% if user.is_authenticated %}
+    <a id="new-post-button" href="#" class="float" data-toggle="modal" data-target="#new-post-modal">
         <i class="fas fa-pen my-float"></i>
     </a>
+
+<!-- Modal -->
+<div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog" aria-labelledby="new-post-modal-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="new-post-modal-label">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="compose-form" onsubmit="return false">
+      <div class="modal-body">
+        <div id="new-post-form">     
+            {{ new_post_form.as_p }}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancel-new-post-modal" data-dismiss="modal">Cancel</button>
+        {% comment %} <button type="button" class="btn btn-primary">Post</button> {% endcomment %}
+        <input type="submit" class="btn btn-primary" value="Post"/>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %}
 
 {% endblock %}
 
