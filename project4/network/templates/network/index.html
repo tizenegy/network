@@ -12,7 +12,7 @@
                 <h3 class="banner">All posts</h3>
                 {% if user.is_authenticated %}
                 <div class="button-wrapper">
-                    <button id="new-post-button-big" type="button" class="btn btn-primary" data-toggle="modal" data-target="#new-post-modal">New post</button>
+                    <button id="new-post-button-big" type="button" class="btn btn-warning" data-toggle="modal" data-target="#new-post-modal">New post</button>
                 </div>
                 {% endif %}
                 <div id="all-posts-feed-inner"></div>
@@ -75,9 +75,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="cancel-new-post-modal" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-outline-secondary" id="cancel-new-post-modal" data-dismiss="modal">Cancel</button>
         {% comment %} <button type="button" class="btn btn-primary">Post</button> {% endcomment %}
-        <input type="submit" class="btn btn-primary" value="Post"/>
+        <input type="submit" class="btn btn-warning" value="Post"/>
       </div>
       </form>
     </div>
