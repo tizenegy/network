@@ -1,8 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     // default visibility
     document.querySelector('#loader').style.display = 'block';
-    document.querySelector('#success-top').style.display = 'none';
     document.querySelector('#all-posts-feed').style.display = 'block';
+    window.onload = () => {
+        if (window.innerHeight > window.innerWidth) {
+            document.querySelector('#new-post-button').style.display = 'block';
+            document.querySelector('#new-post-button-big').style.display = 'none';
+        } else {
+            document.querySelector('#new-post-button').style.display = 'none';
+            document.querySelector('#new-post-button-big').style.display = 'block';
+        }
+    }
 
     // load content
     get_all_posts();
@@ -25,6 +33,16 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 });
 
+window.onresize = () => {
+    if (window.innerHeight > window.innerWidth) {
+        document.querySelector('#new-post-button').style.display = 'block';
+        document.querySelector('#new-post-button-big').style.display = 'none';
+    } else {
+        document.querySelector('#new-post-button').style.display = 'none';
+        document.querySelector('#new-post-button-big').style.display = 'block';
+    }
+}
+
 async function send_post(){
     const response = await fetch('/posts', {
     method: 'POST',
@@ -36,9 +54,7 @@ async function send_post(){
     console.log(response.status);
     document.querySelector('#compose-body').value = "";
     document.querySelector('#loader').style.display = 'block';
-    // document.querySelector('#success-top').style.display = 'block';
     setTimeout(() =>  get_all_posts(), 3000);
-    // setTimeout(() => document.querySelector('#success-top').style.display = 'none', 3000);
     document.querySelector('#loader').style.display = 'none';
 }
 
@@ -59,7 +75,7 @@ function get_all_posts(){
                 const wrapper = document.createElement('div');
                 const card = document.createElement('div');
                 const card_body = document.createElement('div');
-                wrapper.className = "col-xs-12 col-sm-8 col-md-8 col-lg-8";
+                // wrapper.className = "col-xs-12 col-sm-8 col-md-8 col-lg-8";
                 card.className = 'card mb-3';
                 card_body.className = 'card-body';
                 card.appendChild(card_body);

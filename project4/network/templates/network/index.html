@@ -3,18 +3,54 @@
 
 {% block body %}
 
-    <div id="success-top" class="alert alert-success" role="alert">
-        Posted successfully!
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <div id="all-posts-feed">
+                <h3 class="banner">All posts</h3>
+                {% if user.is_authenticated %}
+                <div class="button-wrapper">
+                    <button id="new-post-button-big" type="button" class="btn btn-primary" data-toggle="modal" data-target="#new-post-modal">New post</button>
+                </div>
+                {% endif %}
+                <div id="all-posts-feed-inner"></div>
+            </div>
+        </div>
+        <div class="col-xs-0 col-sm-4 col-md-4 col-lg-4">
+            <div class="ad">
+                <h4>Buy this stuff!</h4>
+                <img src="https://www.candywarehouse.com/item-images/127952-01_snickers-candy-bars-48-piece-box.jpg" alt="Snickers" class="img">
+            </div>
+            <div class="ad">
+                <h4>Buy this stuff!</h4>
+                <img src="https://www.candywarehouse.com/item-images/127952-01_snickers-candy-bars-48-piece-box.jpg" alt="Snickers" class="img">
+            </div>
+            <div class="ad">
+                <h4>Buy this stuff!</h4>
+                <img src="https://www.candywarehouse.com/item-images/127952-01_snickers-candy-bars-48-piece-box.jpg" alt="Snickers" class="img">
+            </div>
+            <div class="ad">
+                <h4>Buy this stuff!</h4>
+                <img src="https://www.candywarehouse.com/item-images/127952-01_snickers-candy-bars-48-piece-box.jpg" alt="Snickers" class="img">
+            </div>
+            <div class="ad">
+                <h4>Buy this stuff!</h4>
+                <img src="https://www.candywarehouse.com/item-images/127952-01_snickers-candy-bars-48-piece-box.jpg" alt="Snickers" class="img">
+            </div>
+        </div>
     </div>
+</div>
+
+
+
 
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+        {% comment %} <div id="success-top" class="alert alert-success" role="alert">
+            Posted successfully!
+        </div> {% endcomment %}
         <div class="loader" id="loader">Loading...</div>
-    </div>
-
-    <div id="all-posts-feed">
-        <h3>All posts</h3>
-        <div id="all-posts-feed-inner"
-        </div>
     </div>
 
     {% if user.is_authenticated %}
