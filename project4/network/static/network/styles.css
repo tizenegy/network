@@ -5,9 +5,16 @@ body{
 	font-size:18px;
 	background-color:#CCC;
 } */
-
+.card-header {
+    color: black !important;
+    background-color: #ffe586 !important;
+}
+.card-footer {
+    color: black !important;
+    background-color: #ffe586 !important;
+}
 .banner{
-	background-color: #f7f7f7;
+	background-color: #ffe586;
 	margin-top: 15px;
 	margin-bottom: 15px;
 	padding: 20px;

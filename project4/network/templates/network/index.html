@@ -3,18 +3,18 @@
 
 {% block body %}
 
-
-
+{% comment %} content and adds {% endcomment %}
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
             <div id="all-posts-feed">
-                <h5 class="banner">All posts</h5>
                 {% if user.is_authenticated %}
                 <div class="button-wrapper">
                     <button id="new-post-button-big" type="button" class="btn btn-warning" data-toggle="modal" data-target="#new-post-modal">New post</button>
                 </div>
                 {% endif %}
+                <h5 class="banner">All posts</h5>
+                <div class="loader" id="loader">Loading...</div>
                 <div id="all-posts-feed-inner"></div>
             </div>
         </div>
@@ -43,15 +43,6 @@
     </div>
 </div>
 
-
-
-
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-        {% comment %} <div id="success-top" class="alert alert-success" role="alert">
-            Posted successfully!
-        </div> {% endcomment %}
-        <div class="loader" id="loader">Loading...</div>
-    </div>
 
     {% if user.is_authenticated %}
     <a id="new-post-button" href="#" class="float" data-toggle="modal" data-target="#new-post-modal">

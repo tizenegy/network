@@ -16,8 +16,7 @@ class NewPostForm(forms.Form):
         'placeholder':'Enter your text here.',
         'class': 'form-control',
         'id': 'compose-body',
-        'rows':3, 
-        # 'cols':20
+        'rows':1
         }))
 
 # views

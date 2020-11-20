@@ -14,8 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // load content
     get_all_posts();
-    document.querySelector('#loader').style.display = 'none';
-
+    
     // buttons
     document.querySelector('#all-posts-button').addEventListener('click', ()=> {
         document.querySelector('#loader').style.display = 'block';
@@ -55,7 +54,7 @@ async function send_post(){
     document.querySelector('#compose-body').value = "";
     document.querySelector('#loader').style.display = 'block';
     setTimeout(() =>  get_all_posts(), 3000);
-    document.querySelector('#loader').style.display = 'none';
+    setTimeout(() =>  document.querySelector('#loader').style.display = 'none', 3000);
 }
 
 function get_all_posts(){
@@ -100,6 +99,7 @@ function get_all_posts(){
                 card.appendChild(footer);
 
                 document.querySelector('#all-posts-feed-inner').append(wrapper);
+                document.querySelector('#loader').style.display = 'none';
             });
         }
     })
