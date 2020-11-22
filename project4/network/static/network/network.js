@@ -13,12 +13,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // load content
-    get_all_posts();
+    get_posts();
     
     // buttons
     document.querySelector('#all-posts-button').addEventListener('click', ()=> {
         document.querySelector('#loader').style.display = 'block';
-        get_all_posts();
+        get_posts();
         document.querySelector('#all-posts-feed').style.display = 'block';
         document.querySelector('#loader').style.display = 'none';
     });
@@ -53,11 +53,11 @@ async function send_post(){
     console.log(response.status);
     document.querySelector('#compose-body').value = "";
     document.querySelector('#loader').style.display = 'block';
-    setTimeout(() =>  get_all_posts(), 3000);
+    setTimeout(() =>  get_posts(), 3000);
     setTimeout(() =>  document.querySelector('#loader').style.display = 'none', 3000);
 }
 
-function get_all_posts(){
+function get_posts(){
     document.querySelector('#all-posts-feed-inner').innerHTML = "";
     fetch(`/posts/all`)
     .then(response => response.json())

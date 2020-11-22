@@ -7,6 +7,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+        <div class="spacer"></div>
             <div id="all-posts-feed">
                 {% if user.is_authenticated %}
                 <div class="button-wrapper">
@@ -19,6 +20,7 @@
             </div>
         </div>
         <div class="col-xs-0 col-sm-4 col-md-4 col-lg-4">
+            <div class="spacer"></div>
             <div class="ad">
                 <h5>Buy this stuff!</h5>
                 <a href="https://www.amazon.com/Snickers/s?k=Snickers" target="_blank"> <img src="https://www.candywarehouse.com/item-images/127952-01_snickers-candy-bars-48-piece-box.jpg" alt="Snickers" class="img"></a>
@@ -51,7 +53,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog" aria-labelledby="new-post-modal-label" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="new-post-modal-label">Create a new Post</h5>

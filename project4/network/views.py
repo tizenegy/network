@@ -16,7 +16,7 @@ class NewPostForm(forms.Form):
         'placeholder':'Enter your text here.',
         'class': 'form-control',
         'id': 'compose-body',
-        'rows':1
+        'rows':5
         }))
 
 # views
@@ -97,13 +97,22 @@ def compose(request):
 
 @csrf_exempt
 @login_required
-def feed(request):
+def feed(request, feed_filter):
     if request.method != "GET":
         return JsonResponse(
             {"error": "GET request required."}, 
             status=400
             )
-    data = Post.objects.all()
+
+    if feed_filter == "all":
+        data = Post.objects.all()
+    elif feed_filter == "user":
+        data = Post.objects.filter(op = request.user)
+    else:
+        return JsonResponse(
+            {"error": "Invalid filter parameter."}, 
+            status=400
+            )
     posts = data.order_by("-created").all()
     json_response = [post.serialize() for post in posts]
     return JsonResponse(json_response, safe=False)
