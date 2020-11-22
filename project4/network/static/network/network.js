@@ -13,12 +13,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // load content
-    get_posts();
+    get_posts("all");
     
-    // buttons
+    // buttons and links
     document.querySelector('#all-posts-button').addEventListener('click', ()=> {
         document.querySelector('#loader').style.display = 'block';
-        get_posts();
+        get_posts("all");
+        document.querySelector('#all-posts-feed').style.display = 'block';
+        document.querySelector('#loader').style.display = 'none';
+    });
+    document.querySelector('#user-page-button').addEventListener('click', ()=> {
+        document.querySelector('#loader').style.display = 'block';
+        get_posts("user");
         document.querySelector('#all-posts-feed').style.display = 'block';
         document.querySelector('#loader').style.display = 'none';
     });
@@ -53,13 +59,13 @@ async function send_post(){
     console.log(response.status);
     document.querySelector('#compose-body').value = "";
     document.querySelector('#loader').style.display = 'block';
-    setTimeout(() =>  get_posts(), 3000);
+    setTimeout(() =>  get_posts("all"), 3000);
     setTimeout(() =>  document.querySelector('#loader').style.display = 'none', 3000);
 }
 
-function get_posts(){
+function get_posts(feed_filter){
     document.querySelector('#all-posts-feed-inner').innerHTML = "";
-    fetch(`/posts/all`)
+    fetch(`/posts/${feed_filter}`)
     .then(response => response.json())
     .then(posts => {
         console.log(posts);

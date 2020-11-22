@@ -45,13 +45,13 @@
     </div>
 </div>
 
-
+{% comment %} floating button {% endcomment %}
     {% if user.is_authenticated %}
     <a id="new-post-button" href="#" class="float" data-toggle="modal" data-target="#new-post-modal">
         <i class="fas fa-pen my-float"></i>
     </a>
 
-<!-- Modal -->
+{% comment %} new post form modal {% endcomment %}
 <div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog" aria-labelledby="new-post-modal-label" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
