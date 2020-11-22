@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     // default visibility
+    document.querySelector('#user-page-elements').style.display = 'none';
     document.querySelector('#loader').style.display = 'block';
     document.querySelector('#all-posts-feed').style.display = 'block';
+    document.querySelector('#new-post-button-big').style.display = 'block';
     window.onload = () => {
         if (window.innerHeight > window.innerWidth) {
             document.querySelector('#new-post-button').style.display = 'block';
@@ -17,13 +19,20 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // buttons and links
     document.querySelector('#all-posts-button').addEventListener('click', ()=> {
+        document.querySelector('#user-page-elements').style.display = 'none';
+        document.querySelector("#feed-banner").innerHTML = 'All posts';
         document.querySelector('#loader').style.display = 'block';
+        document.querySelector('#new-post-button-big').style.display = 'block';
         get_posts("all");
         document.querySelector('#all-posts-feed').style.display = 'block';
         document.querySelector('#loader').style.display = 'none';
     });
     document.querySelector('#user-page-button').addEventListener('click', ()=> {
+        document.querySelector('#user-page-elements').style.display = 'block';
+        document.querySelector("#feed-banner").innerHTML = 'Your posts';
         document.querySelector('#loader').style.display = 'block';
+        document.querySelector('#new-post-button-big').style.display = 'none';
+        document.querySelector('#user-page-elements').style.display = 'block';
         get_posts("user");
         document.querySelector('#all-posts-feed').style.display = 'block';
         document.querySelector('#loader').style.display = 'none';
@@ -34,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
         send_post();
         cancel_button = document.querySelector('#cancel-new-post-modal');
         cancel_button.click();
-        // document.querySelector('#new-post-form').style.display = 'none';
+        setTimeout(() =>  get_posts("all"), 3000);
+        setTimeout(() =>  document.querySelector('#loader').style.display = 'none', 3000);
       });
 });
 
@@ -59,8 +69,6 @@ async function send_post(){
     console.log(response.status);
     document.querySelector('#compose-body').value = "";
     document.querySelector('#loader').style.display = 'block';
-    setTimeout(() =>  get_posts("all"), 3000);
-    setTimeout(() =>  document.querySelector('#loader').style.display = 'none', 3000);
 }
 
 function get_posts(feed_filter){

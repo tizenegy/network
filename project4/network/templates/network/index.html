@@ -3,18 +3,26 @@
 
 {% block body %}
 
+
 {% comment %} content and adds {% endcomment %}
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
         <div class="spacer"></div>
+
+            {% comment %} user page upper elements {% endcomment %}
+            <div id="user-page-elements">
+                <h5 class="banner">Networker: {{ user.username }}</h5>
+                <div class="spacer"></div>
+            </div>
+
             <div id="all-posts-feed">
                 {% if user.is_authenticated %}
                 <div class="button-wrapper">
-                    <button id="new-post-button-big" type="button" class="btn btn-warning" data-toggle="modal" data-target="#new-post-modal">New post</button>
+                    <button id="new-post-button-big" type="button" class="btn btn-warning" data-toggle="modal" data-target="#new-post-modal">Write a new post</button>
                 </div>
                 {% endif %}
-                <h5 class="banner">All posts</h5>
+                <h5 id="feed-banner" class="banner">All posts</h5>
                 <div class="loader" id="loader">Loading...</div>
                 <div id="all-posts-feed-inner"></div>
             </div>
