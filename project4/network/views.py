@@ -116,3 +116,24 @@ def feed(request, feed_filter):
     posts = data.order_by("-created").all()
     json_response = [post.serialize() for post in posts]
     return JsonResponse(json_response, safe=False)
+
+@csrf_exempt
+@login_required
+def user(request, username):
+    if request.method != "GET":
+        return JsonResponse(
+            {"error": "GET request required."}, 
+            status=400
+            )
+# TODO: build different cases and check if username exists
+    if username == "all":
+        data = User.objects.all()
+    elif username != "all":
+        data = User.objects.filter(username = username)
+    else:
+        return JsonResponse(
+            {"error": "Invalid filter parameter."}, 
+            status=400
+            )
+    json_response = [user.serialize() for user in data]
+    return JsonResponse(json_response, safe=False)

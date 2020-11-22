@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#loader').style.display = 'block';
     document.querySelector('#all-posts-feed').style.display = 'block';
     document.querySelector('#new-post-button-big').style.display = 'block';
+    document.querySelector('#new-post-button').style.display = 'block';
     window.onload = () => {
         if (window.innerHeight > window.innerWidth) {
             document.querySelector('#new-post-button').style.display = 'block';
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector("#feed-banner").innerHTML = 'All posts';
         document.querySelector('#loader').style.display = 'block';
         document.querySelector('#new-post-button-big').style.display = 'block';
+        document.querySelector('#new-post-button').style.display = 'block';
         get_posts("all");
         document.querySelector('#all-posts-feed').style.display = 'block';
         document.querySelector('#loader').style.display = 'none';
@@ -32,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector("#feed-banner").innerHTML = 'Your posts';
         document.querySelector('#loader').style.display = 'block';
         document.querySelector('#new-post-button-big').style.display = 'none';
+        document.querySelector('#new-post-button').style.display = 'none';
         document.querySelector('#user-page-elements').style.display = 'block';
         get_posts("user");
         document.querySelector('#all-posts-feed').style.display = 'block';
@@ -117,6 +120,10 @@ function get_posts(feed_filter){
             });
         }
     })
+}
+
+function get_user(username){
+    
 }
 
 

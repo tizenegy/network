@@ -12,6 +12,13 @@ class User(AbstractUser):
 
     def __str__(self):
         return f"{self.username}"
+    def serialize(self):
+        return {
+            "username": self.username,
+            "following": self.following.count(),
+            "followers": self.followers.count(),
+            "created": self.date_joined
+        }
 
 class Following(models.Model):
     from_User_id = models.ForeignKey(
