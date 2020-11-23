@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("dom loaded");
     // default visibility
     document.querySelector('#user-page-elements').style.display = 'none';
     document.querySelector('#loader').style.display = 'block';
@@ -14,9 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('#new-post-button-big').style.display = 'block';
         }
     }
+    console.log("visibility done");
 
     // load content
     get_posts("all");
+    console.log("getting posts done");
     
     // buttons and links
     document.querySelector('#all-posts-button').addEventListener('click', ()=> {
@@ -30,15 +33,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('#loader').style.display = 'none';
     });
     document.querySelector('#user-page-button').addEventListener('click', ()=> {
-        document.querySelector('#user-page-elements').style.display = 'block';
-        document.querySelector("#feed-banner").innerHTML = 'Your posts';
-        document.querySelector('#loader').style.display = 'block';
-        document.querySelector('#new-post-button-big').style.display = 'none';
-        document.querySelector('#new-post-button').style.display = 'none';
-        document.querySelector('#user-page-elements').style.display = 'block';
-        get_posts("user");
-        document.querySelector('#all-posts-feed').style.display = 'block';
-        document.querySelector('#loader').style.display = 'none';
+        current_username = "bastian";
+        // current_username = document.getElementById('current_username').value;
+        show_userpage(current_username);
+        console.log(`opening user page for ${current_username}`);
     });
     document.querySelector('#compose-form').addEventListener('submit', (event) => {
         event.preventDefault();
@@ -49,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() =>  get_posts("all"), 3000);
         setTimeout(() =>  document.querySelector('#loader').style.display = 'none', 3000);
       });
+      console.log("event listeners done");
 });
 
 window.onresize = () => {
@@ -108,8 +107,13 @@ function get_posts(feed_filter){
                 header.innerHTML = `${post.op}`;
                 content.innerHTML = `${post.content}`;
                 likes.innerHTML = `${post.likes} likes`;
-                footer.innerHTML = `${post.created}`;
+                footer.innerHTML = `${post.created} <button class="hide">Hide</button>`;
                 likes.style.textAlign = "right";
+                header.setAttribute('data-op', `${post.op}`)
+                header.onclick = function() {
+                    show_userpage(post.op);
+                    console.log(`opening user page for ${post.op}`);
+                };
                 card.prepend(header);
                 card_body.appendChild(content);
                 card_body.appendChild(likes);
@@ -117,15 +121,29 @@ function get_posts(feed_filter){
 
                 document.querySelector('#all-posts-feed-inner').append(wrapper);
                 document.querySelector('#loader').style.display = 'none';
+
             });
         }
     })
 }
 
 function get_user(username){
-    
+
 }
 
+function show_userpage(username){
+    document.querySelector('#user-page-elements').style.display = 'block';
+    document.querySelector("#feed-banner").innerHTML = `Posts by ${username}`;
+    document.querySelector("#user-page-banner").innerHTML = `Networker: ${username}`;
+    document.querySelector('#loader').style.display = 'block';
+    document.querySelector('#new-post-button-big').style.display = 'none';
+    document.querySelector('#new-post-button').style.display = 'none';
+    document.querySelector('#user-page-elements').style.display = 'block';
+    get_posts(username);
+    document.querySelector('#all-posts-feed').style.display = 'block';
+    document.querySelector('#loader').style.display = 'none';
+    scroll(0,0);
+}
 
 
 // utility functions

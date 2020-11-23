@@ -106,8 +106,9 @@ def feed(request, feed_filter):
 
     if feed_filter == "all":
         data = Post.objects.all()
-    elif feed_filter == "user":
-        data = Post.objects.filter(op = request.user)
+    elif (User.objects.get(username__contains=feed_filter)):
+        user = User.objects.get(username__contains=feed_filter)
+        data = Post.objects.filter(op = user)
     else:
         return JsonResponse(
             {"error": "Invalid filter parameter."}, 

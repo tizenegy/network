@@ -12,7 +12,27 @@
 
             {% comment %} user page upper elements {% endcomment %}
             <div id="user-page-elements">
-                <h5 class="banner">Networker: {{ user.username }}</h5>
+                <h5 id="user-page-banner" class="banner"></h5>
+
+                {% comment %} <div class="container"> {% endcomment %}
+                    <div class="row"> 
+                        <div class="col">
+                        <div class="row">
+                            <p class="col">1-1 I’m the first element in this grid</p>
+                            <p class="col">2-1 I’m the second element in this grid</p>
+                        </div>
+                        </div>
+                        <p class="col">1-2 I’m the first element in the second grid</p>
+                        <p class="col">2-2 I’m the second element in this grid</p>
+                        <div class="col">      
+                        <div class="row">
+                            <p class="col">1-3 First element in a double nested grid</p>
+                            <p class="col">2-3 Yeah, that asdf adf adff</p>
+                        </div>
+                        </div>
+                    </div>
+                {% comment %} </div> {% endcomment %}
+
                 <div class="spacer"></div>
             </div>
 
