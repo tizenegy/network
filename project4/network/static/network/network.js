@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('#loader').style.display = 'none';
     });
     document.querySelector('#user-page-button').addEventListener('click', ()=> {
-        current_username = "bastian";
-        // current_username = document.getElementById('current_username').value;
+        // current_username = "bastian";
+        current_username = document.getElementById('current_username').value;
         show_userpage(current_username);
         console.log(`opening user page for ${current_username}`);
     });
@@ -47,6 +47,15 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() =>  get_posts("all"), 3000);
         setTimeout(() =>  document.querySelector('#loader').style.display = 'none', 3000);
       });
+
+      document.addEventListener('click', event => {
+        const element = event.target;
+        if (element.className == 'card-header'){
+            show_userpage(element.dataset.op);
+            console.log(`opening user page for ${element.dataset.op}`);
+        }
+      });
+
       console.log("event listeners done");
 });
 
@@ -110,10 +119,6 @@ function get_posts(feed_filter){
                 footer.innerHTML = `${post.created} <button class="hide">Hide</button>`;
                 likes.style.textAlign = "right";
                 header.setAttribute('data-op', `${post.op}`)
-                header.onclick = function() {
-                    show_userpage(post.op);
-                    console.log(`opening user page for ${post.op}`);
-                };
                 card.prepend(header);
                 card_body.appendChild(content);
                 card_body.appendChild(likes);
