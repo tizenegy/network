@@ -133,7 +133,19 @@ function get_posts(feed_filter){
 }
 
 function get_user(username){
-
+    fetch(`/users/${username}`)
+    .then(response => response.json())
+    .then(users => {
+        console.log(users);
+        if (isEmpty(users)){
+            console.log("json does not contain user");
+        } else {
+            users.forEach(user => {
+                document.querySelector('#user-page-item1').innerHTML = `${user.followers} followers`;
+                document.querySelector('#user-page-item2').innerHTML = `${user.following} following`;
+            })
+        }
+    })
 }
 
 function show_userpage(username){
@@ -144,6 +156,7 @@ function show_userpage(username){
     document.querySelector('#new-post-button-big').style.display = 'none';
     document.querySelector('#new-post-button').style.display = 'none';
     document.querySelector('#user-page-elements').style.display = 'block';
+    get_user(username);
     get_posts(username);
     document.querySelector('#all-posts-feed').style.display = 'block';
     document.querySelector('#loader').style.display = 'none';

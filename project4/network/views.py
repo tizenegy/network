@@ -106,9 +106,9 @@ def feed(request, feed_filter):
 
     if feed_filter == "all":
         data = Post.objects.all()
-    elif (User.objects.get(username__contains=feed_filter)):
-        user = User.objects.get(username__contains=feed_filter)
-        data = Post.objects.filter(op = user)
+    elif (User.objects.get(username__contains = feed_filter)):
+        op = User.objects.get(username__contains = feed_filter)
+        data = Post.objects.filter(op = op)
     else:
         return JsonResponse(
             {"error": "Invalid filter parameter."}, 
@@ -129,7 +129,7 @@ def user(request, username):
 # TODO: build different cases and check if username exists
     if username == "all":
         data = User.objects.all()
-    elif username != "all":
+    elif User.objects.get(username__contains = username):
         data = User.objects.filter(username = username)
     else:
         return JsonResponse(
