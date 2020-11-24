@@ -18,9 +18,9 @@
     <body>
         {% comment %} username for js {% endcomment %}
         <input type="hidden" id="current_username" value={{ user.username }}>
+
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ffffff;">
-        {% comment %} <nav class="navbar navbar-expand-lg navbar-light bg-light"> {% endcomment %}
-        <a class="navbar-brand" href="#">
+        <a id="home-page-button" class="navbar-brand" href="#">
         <img src="{% static 'network/packman-yellow.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
         Network
         </a>

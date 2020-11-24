@@ -23,17 +23,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // buttons and links
     document.querySelector('#all-posts-button').addEventListener('click', ()=> {
-        document.querySelector('#user-page-elements').style.display = 'none';
-        document.querySelector("#feed-banner").innerHTML = 'All posts';
-        document.querySelector('#loader').style.display = 'block';
-        document.querySelector('#new-post-button-big').style.display = 'block';
-        document.querySelector('#new-post-button').style.display = 'block';
-        get_posts("all");
-        document.querySelector('#all-posts-feed').style.display = 'block';
-        document.querySelector('#loader').style.display = 'none';
+        show_homepage();
+    });
+    document.querySelector('#home-page-button').addEventListener('click', ()=> {
+        show_homepage();
     });
     document.querySelector('#user-page-button').addEventListener('click', ()=> {
-        // current_username = "bastian";
         current_username = document.getElementById('current_username').value;
         show_userpage(current_username);
         console.log(`opening user page for ${current_username}`);
@@ -147,6 +142,17 @@ function get_user(username){
             })
         }
     })
+}
+
+function show_homepage(){
+    document.querySelector('#user-page-elements').style.display = 'none';
+    document.querySelector("#feed-banner").innerHTML = 'All posts';
+    document.querySelector('#loader').style.display = 'block';
+    document.querySelector('#new-post-button-big').style.display = 'block';
+    document.querySelector('#new-post-button').style.display = 'block';
+    get_posts("all");
+    document.querySelector('#all-posts-feed').style.display = 'block';
+    document.querySelector('#loader').style.display = 'none';
 }
 
 function show_userpage(username){
