@@ -33,6 +33,10 @@ body{
   border-radius: 5px 5px 5px 5px;
   text-align: center;
 }
+.dashboard-button{
+  background-color: #ffc107;
+  width: 100%;
+}
 .img{
 	object-fit: cover;
 	max-width: 100%;

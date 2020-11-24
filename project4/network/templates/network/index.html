@@ -21,9 +21,11 @@
                             <div class="dashboard" id="user-page-item2">
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="dashboard" id="user-page-item3">
-                            </div>
+                        <div id="user-dashboard-button" class="col">
+                            {% if user.is_authenticated %}
+                            <button class="dashboard dashboard-button" id="user-page-item3" type="button">
+                            </button>
+                            {% endif %}
                         </div>
                     </div>
                 <div class="spacer"></div>

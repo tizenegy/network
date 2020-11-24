@@ -163,6 +163,13 @@ function show_userpage(username){
     document.querySelector('#new-post-button-big').style.display = 'none';
     document.querySelector('#new-post-button').style.display = 'none';
     document.querySelector('#user-page-elements').style.display = 'block';
+    current_user = document.querySelector('#current_username').value;
+    if (username === current_user){
+        document.querySelector('#user-dashboard-button').style.display = 'none';
+    }else{
+        document.querySelector('#user-dashboard-button').style.display = 'block';
+    }
+    console.log(`current: ${current_user} viewing: ${username}`);
     get_user(username);
     get_posts(username);
     document.querySelector('#all-posts-feed').style.display = 'block';
