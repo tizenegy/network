@@ -10,5 +10,6 @@ urlpatterns = [
     # API Routes
     path("posts", views.compose, name="compose"),
     path("posts/<str:feed_filter>", views.feed, name="feed"),
-    path("users/<str:username>", views.user, name="user")
+    path("users/<str:username>", views.user, name="user"),
+    path("follow", views.follow, name="follow")
 ]
