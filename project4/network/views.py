@@ -104,8 +104,8 @@ def follow(request):
             status=400
             )
     else:
-        from_user_name = request.GET.get("from_user")
-        to_user_name = request.GET.get("to_user")
+        from_user_name = request.POST.get("from_user")
+        to_user_name = request.POST.get("to_user")
         from_user = User.objects.get(username__contains = from_user_name)
         to_user = User.objects.get(username__contains = to_user_name)
         if (from_user and to_user):

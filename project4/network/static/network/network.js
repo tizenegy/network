@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // load content
     get_posts("all");
+
+    // set local storage
+    localStorage.setItem('pagename', 'home');
+    localStorage.setItem('username', document.querySelector('#current_username').value);
+    localStorage.setItem('target_username', '');
     console.log("getting posts done");
     
     // buttons and links
@@ -28,10 +33,16 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#home-page-button').addEventListener('click', ()=> {
         show_homepage();
     });
+    document.querySelector('#user-dashboard-button').addEventListener('click', ()=> {
+        from_username = localStorage.getItem('username');
+        to_username = localStorage.getItem('target_username');
+        console.log(`${from_username} wants to follow ${to_username}`);
+        toggle_follow(from_username, to_username);
+        setTimeout(() =>  get_user(to_username), 1000);
+    });
     document.querySelector('#user-page-button').addEventListener('click', ()=> {
-        current_username = document.getElementById('current_username').value;
-        show_userpage(current_username);
-        console.log(`opening user page for ${current_username}`);
+        show_userpage(localStorage.getItem('username'));
+        console.log(`opening user page for ${localStorage.getItem('username')}`);
     });
     document.querySelector('#compose-form').addEventListener('submit', (event) => {
         event.preventDefault();
@@ -48,12 +59,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (element.className == 'card-header'){
             show_userpage(element.dataset.op);
             console.log(`opening user page for ${element.dataset.op}`);
+            localStorage.setItem('target_username', element.dataset.op)
         }
       });
 
       console.log("event listeners done");
 });
-
+// toggle floating button
 window.onresize = () => {
     if (window.innerHeight > window.innerWidth) {
         document.querySelector('#new-post-button').style.display = 'block';
@@ -64,6 +76,7 @@ window.onresize = () => {
     }
 }
 
+// functionality
 async function send_post(){
     const response = await fetch('/posts', {
     method: 'POST',
@@ -144,6 +157,16 @@ function get_user(username){
     })
 }
 
+function toggle_follow(from_username, to_username){
+    fetch(`/follow`, {
+        method: 'POST',
+        body: `from_user=${from_username}&to_user=${to_username}`,
+        headers: {'Content-type': 'application/x-www-form-urlencoded'}
+    })
+    };
+
+
+// pages
 function show_homepage(){
     document.querySelector('#user-page-elements').style.display = 'none';
     document.querySelector("#feed-banner").innerHTML = 'All posts';
@@ -151,8 +174,11 @@ function show_homepage(){
     document.querySelector('#new-post-button-big').style.display = 'block';
     document.querySelector('#new-post-button').style.display = 'block';
     get_posts("all");
+    localStorage.setItem('pagename','home');
+    localStorage.setItem('target_username','');
     document.querySelector('#all-posts-feed').style.display = 'block';
     document.querySelector('#loader').style.display = 'none';
+    console.log(localStorage);
 }
 
 function show_userpage(username){
@@ -163,18 +189,20 @@ function show_userpage(username){
     document.querySelector('#new-post-button-big').style.display = 'none';
     document.querySelector('#new-post-button').style.display = 'none';
     document.querySelector('#user-page-elements').style.display = 'block';
-    current_user = document.querySelector('#current_username').value;
-    if (username === current_user){
+    if (username === localStorage.getItem('username')){
         document.querySelector('#user-dashboard-button').style.display = 'none';
     }else{
         document.querySelector('#user-dashboard-button').style.display = 'block';
     }
-    console.log(`current: ${current_user} viewing: ${username}`);
+    console.log(`current: ${localStorage.getItem('username')} viewing: ${username}`);
     get_user(username);
     get_posts(username);
     document.querySelector('#all-posts-feed').style.display = 'block';
     document.querySelector('#loader').style.display = 'none';
     scroll(0,0);
+    localStorage.setItem('pagename','user');
+    localStorage.setItem('target_username',username);
+    console.log(localStorage);
 }
 
 
