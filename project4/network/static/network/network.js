@@ -143,6 +143,7 @@ function get_user(username){
             users.forEach(user => {
                 document.querySelector('#user-page-item1').innerHTML = `${user.followers} followers`;
                 document.querySelector('#user-page-item2').innerHTML = `${user.following} following`;
+                document.querySelector('#user-page-item3').innerHTML = `follow`;
             })
         }
     })

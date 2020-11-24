@@ -25,15 +25,13 @@ body{
 	border-radius: 5px 5px 5px 5px;
 }
 .dashboard{
-	background-color: #ffe586;
-	margin-top: 15px;
-	margin-bottom: 15px;
-	padding: 20px;
+	background-color: white;
+	padding: 10px;
 	border-color: #d8d8d8;
-	/* border-color: #d8d8d8; */
 	border-width: 1px;
 	border-style: solid;
-	border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  text-align: center;
 }
 .img{
 	object-fit: cover;
