@@ -164,6 +164,9 @@ function toggle_follow(from_username, to_username){
         headers: {'Content-type': 'application/x-www-form-urlencoded'}
     })
     .then(response => response.json())
+    .then (rsp => {
+        console.log(`3: log string: ${JSON.stringify(rsp)}`)
+    })
     };
 
 
