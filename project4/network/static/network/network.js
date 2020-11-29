@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         to_username = localStorage.getItem('target_username');
         console.log(`${from_username} wants to follow ${to_username}`);
         toggle_follow(from_username, to_username);
-        setTimeout(() =>  get_user(to_username), 1000);
+        setTimeout(() =>  get_user(to_username), 2000);
     });
     document.querySelector('#user-page-button').addEventListener('click', ()=> {
         show_userpage(localStorage.getItem('username'));
@@ -163,6 +163,7 @@ function toggle_follow(from_username, to_username){
         body: `from_user=${from_username}&to_user=${to_username}`,
         headers: {'Content-type': 'application/x-www-form-urlencoded'}
     })
+    .then(response => response.json())
     };
 
 
