@@ -150,8 +150,7 @@ function get_user(username){
         } else {
             users.forEach(user => {
                 document.querySelector('#user-page-item1').innerHTML = `${user.followers} followers`;
-                document.querySelector('#user-page-item2').innerHTML = `${user.following} following`;
-                document.querySelector('#user-page-item3').innerHTML = `follow`;
+                document.querySelector('#user-page-item2').innerHTML = `${user.following} following`;           
             })
         }
     })
@@ -165,7 +164,29 @@ function toggle_follow(from_username, to_username){
     })
     .then(response => response.json())
     .then (rsp => {
-        console.log(`3: log string: ${JSON.stringify(rsp)}`)
+        console.log(`server: ${rsp.message}`);
+        if (rsp.message == "Unfollow successful."){
+            document.querySelector('#user-page-item3').innerHTML = `Follow`;
+        } else if (rsp.message == "Follow successful.") {
+            document.querySelector('#user-page-item3').innerHTML = `Unfollow`;
+        } else {
+            document.querySelector('#user-page-item3').innerHTML = ``;
+        }
+    })
+    };
+
+function get_follow_status(from_username, to_username){
+    fetch(`/follow/${from_username}/${to_username}`)
+    .then(response => response.json())
+    .then (rsp => {
+        console.log(`server: ${rsp.message}`);
+        if (rsp.message == "not following"){
+            document.querySelector('#user-page-item3').innerHTML = `Follow`;
+        } else if (rsp.message == "following") {
+            document.querySelector('#user-page-item3').innerHTML = `Unfollow`;
+        } else {
+            document.querySelector('#user-page-item3').innerHTML = `Error`;
+        }
     })
     };
 
@@ -185,27 +206,29 @@ function show_homepage(){
     console.log(localStorage);
 }
 
-function show_userpage(username){
+function show_userpage(target_username){
     document.querySelector('#user-page-elements').style.display = 'block';
-    document.querySelector("#feed-banner").innerHTML = `Posts by ${username}`;
-    document.querySelector("#user-page-banner").innerHTML = `Networker: ${username}`;
+    document.querySelector("#feed-banner").innerHTML = `Posts by ${target_username}`;
+    document.querySelector("#user-page-banner").innerHTML = `Networker: ${target_username}`;
     document.querySelector('#loader').style.display = 'block';
     document.querySelector('#new-post-button-big').style.display = 'none';
     document.querySelector('#new-post-button').style.display = 'none';
     document.querySelector('#user-page-elements').style.display = 'block';
-    if (username === localStorage.getItem('username')){
+    username = localStorage.getItem('username')
+    if (target_username === username) {
         document.querySelector('#user-dashboard-button').style.display = 'none';
     }else{
         document.querySelector('#user-dashboard-button').style.display = 'block';
     }
-    console.log(`current: ${localStorage.getItem('username')} viewing: ${username}`);
-    get_user(username);
-    get_posts(username);
+    console.log(`current: ${username} viewing: ${target_username}`);
+    get_user(target_username);
+    get_follow_status(username, target_username); 
+    get_posts(target_username);
     document.querySelector('#all-posts-feed').style.display = 'block';
     document.querySelector('#loader').style.display = 'none';
     scroll(0,0);
     localStorage.setItem('pagename','user');
-    localStorage.setItem('target_username',username);
+    localStorage.setItem('target_username',target_username);
     console.log(localStorage);
 }
 

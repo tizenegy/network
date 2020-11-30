@@ -98,12 +98,8 @@ def compose(request):
 @csrf_exempt
 @login_required
 def follow(request):
-    if request.method != "POST":
-        return JsonResponse(
-            {"error": "POST request required."}, 
-            status=400
-            )
-    else:
+    method = request.method
+    if method == "POST":
         from_user_name = request.POST.get("from_user")
         to_user_name = request.POST.get("to_user")
         from_user = User.objects.get(username__contains = from_user_name)
@@ -125,6 +121,34 @@ def follow(request):
                 {"error": "Unknown user names."}, 
                 status=400
                 )
+    else:
+        return JsonResponse(
+            {"error": "POST or GET request required."}, 
+            status=400
+            )
+
+@csrf_exempt
+@login_required
+def follow_status(request, username, target_username):
+    if request.method == "GET":
+        from_user = User.objects.get(username__contains = username)
+        to_user = User.objects.get(username__contains = target_username)
+        if (from_user and to_user):
+            relationship = Following.objects.filter(from_User_id=from_user).filter(to_User_id=to_user)
+            if relationship:
+                return JsonResponse({"message": "following"}, status=201)
+            else:
+                return JsonResponse({"message": "not following"}, status=201)
+        else:
+            return JsonResponse(
+                {"error": "Unknown user names."}, 
+                status=400
+                )
+    else:
+        return JsonResponse(
+            {"error": "POST or GET request required."}, 
+            status=400
+            )
 
 @csrf_exempt
 @login_required
