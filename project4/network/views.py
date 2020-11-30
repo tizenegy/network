@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 import json
 from django.http import JsonResponse
 from django import forms
+from django.core.paginator import Paginator
 
 # forms
 class NewPostForm(forms.Form):
@@ -151,6 +152,8 @@ def follow_status(request, username, target_username):
 
 @csrf_exempt
 def feed(request, feed_filter):
+    page_number = request.GET['page']
+    ppp = request.GET['ppp']
     if request.method != "GET":
         return JsonResponse(
             {"error": "GET request required."}, 
@@ -165,11 +168,8 @@ def feed(request, feed_filter):
     elif ("userfeed-" in feed_filter):
         split_list = feed_filter.split("-", 1)
         username = split_list[1]
-        # username->user-obj->
         user = User.objects.get(username=username)
         target_users = user.following.all()
-#        relationships = Following.objects.filter(from_User_id=user)
-#        target_users = User.objects.filter()
         data = Post.objects.filter(op__in = target_users)
 
     else:
@@ -177,7 +177,13 @@ def feed(request, feed_filter):
             {"error": "Invalid filter parameter."}, 
             status=400
             )
-    posts = data.order_by("-created").all()
+    # sorting and pagination        
+    ordered = data.order_by("-created").all()
+    pagination = Paginator(ordered,ppp)
+
+    page = pagination.get_page(page_number)
+    posts = page.object_list
+
     json_response = [post.serialize() for post in posts]
     return JsonResponse(json_response, safe=False)
 

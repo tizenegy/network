@@ -104,7 +104,10 @@ function get_posts(feed_filter){
         feed_filter = `${feed_filter}-${localStorage.getItem("username")}`;
     }
     console.log(feed_filter);
-    fetch(`/posts/${feed_filter}`)
+    // fetch(`/posts/${feed_filter}`)
+    page = 1
+    posts_per_page = 10
+    fetch(`/posts/${feed_filter}?page=${page}&ppp=${posts_per_page}`)
     .then(response => response.json())
     .then(posts => {
         console.log(posts);
@@ -255,8 +258,8 @@ function show_following_feed(){
     document.querySelector('#loader').style.display = 'block';
     username = localStorage.getItem('username')
     if (document.querySelector('#current_username').value !== ""){
-        document.querySelector('#new-post-button-big').style.display = 'none';
-        document.querySelector('#new-post-button').style.display = 'none';
+        document.querySelector('#new-post-button-big').style.display = 'block';
+        document.querySelector('#new-post-button').style.display = 'block';
     }
     get_posts("userfeed");
     document.querySelector('#all-posts-feed').style.display = 'block';
