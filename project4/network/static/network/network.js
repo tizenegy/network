@@ -47,7 +47,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         document.querySelector('#user-page-button').addEventListener('click', ()=> {
             show_userpage(localStorage.getItem('username'));
-            console.log(`opening user page for ${localStorage.getItem('username')}`);
+        });
+        document.querySelector('#following-page-button').addEventListener('click', ()=> {
+            show_following_feed();
         });
         document.querySelector('#compose-form').addEventListener('submit', (event) => {
             event.preventDefault();
@@ -239,6 +241,24 @@ function show_userpage(target_username){
     scroll(0,0);
     localStorage.setItem('pagename','user');
     localStorage.setItem('target_username',target_username);
+    console.log(localStorage);
+}
+
+function show_following_feed(){
+    document.querySelector('#user-page-elements').style.display = 'none';
+    document.querySelector("#feed-banner").innerHTML = `Users you follow`;
+    document.querySelector("#user-page-banner").style.display = 'none';
+    document.querySelector('#loader').style.display = 'block';
+    username = localStorage.getItem('username')
+    if (document.querySelector('#current_username').value !== ""){
+        document.querySelector('#new-post-button-big').style.display = 'none';
+        document.querySelector('#new-post-button').style.display = 'none';
+    }
+    get_posts("all");
+    document.querySelector('#all-posts-feed').style.display = 'block';
+    document.querySelector('#loader').style.display = 'none';
+    scroll(0,0);
+    localStorage.setItem('pagename','following');
     console.log(localStorage);
 }
 
