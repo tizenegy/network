@@ -4,15 +4,19 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#user-page-elements').style.display = 'none';
     document.querySelector('#loader').style.display = 'block';
     document.querySelector('#all-posts-feed').style.display = 'block';
-    document.querySelector('#new-post-button-big').style.display = 'block';
-    document.querySelector('#new-post-button').style.display = 'block';
+    if (document.querySelector('#current_username').value !== ""){
+        document.querySelector('#new-post-button-big').style.display = 'block';
+        document.querySelector('#new-post-button').style.display = 'block';
+    }
     window.onload = () => {
-        if (window.innerHeight > window.innerWidth) {
-            document.querySelector('#new-post-button').style.display = 'block';
-            document.querySelector('#new-post-button-big').style.display = 'none';
-        } else {
-            document.querySelector('#new-post-button').style.display = 'none';
-            document.querySelector('#new-post-button-big').style.display = 'block';
+        if (document.querySelector('#current_username').value !== ""){
+            if (window.innerHeight > window.innerWidth) {
+                document.querySelector('#new-post-button').style.display = 'block';
+                document.querySelector('#new-post-button-big').style.display = 'none';
+            } else {
+                document.querySelector('#new-post-button').style.display = 'none';
+                document.querySelector('#new-post-button-big').style.display = 'block';
+            }
         }
     }
     console.log("visibility done");
@@ -33,26 +37,28 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#home-page-button').addEventListener('click', ()=> {
         show_homepage();
     });
-    document.querySelector('#user-dashboard-button').addEventListener('click', ()=> {
-        from_username = localStorage.getItem('username');
-        to_username = localStorage.getItem('target_username');
-        console.log(`${from_username} wants to follow ${to_username}`);
-        toggle_follow(from_username, to_username);
-        setTimeout(() =>  get_user(to_username), 2000);
-    });
-    document.querySelector('#user-page-button').addEventListener('click', ()=> {
-        show_userpage(localStorage.getItem('username'));
-        console.log(`opening user page for ${localStorage.getItem('username')}`);
-    });
-    document.querySelector('#compose-form').addEventListener('submit', (event) => {
-        event.preventDefault();
-        document.querySelector('#loader').style.display = 'block';
-        send_post();
-        cancel_button = document.querySelector('#cancel-new-post-modal');
-        cancel_button.click();
-        setTimeout(() =>  get_posts("all"), 3000);
-        setTimeout(() =>  document.querySelector('#loader').style.display = 'none', 3000);
-      });
+    if (document.querySelector('#current_username').value !== ""){
+        document.querySelector('#user-dashboard-button').addEventListener('click', ()=> {
+            from_username = localStorage.getItem('username');
+            to_username = localStorage.getItem('target_username');
+            console.log(`${from_username} wants to follow ${to_username}`);
+            toggle_follow(from_username, to_username);
+            setTimeout(() =>  get_user(to_username), 2000);
+        });
+        document.querySelector('#user-page-button').addEventListener('click', ()=> {
+            show_userpage(localStorage.getItem('username'));
+            console.log(`opening user page for ${localStorage.getItem('username')}`);
+        });
+        document.querySelector('#compose-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            document.querySelector('#loader').style.display = 'block';
+            send_post();
+            cancel_button = document.querySelector('#cancel-new-post-modal');
+            cancel_button.click();
+            setTimeout(() =>  get_posts("all"), 3000);
+            setTimeout(() =>  document.querySelector('#loader').style.display = 'none', 3000);
+        });
+    }
 
       document.addEventListener('click', event => {
         const element = event.target;
@@ -196,8 +202,10 @@ function show_homepage(){
     document.querySelector('#user-page-elements').style.display = 'none';
     document.querySelector("#feed-banner").innerHTML = 'All posts';
     document.querySelector('#loader').style.display = 'block';
+    if (document.querySelector('#current_username').value !== ""){
     document.querySelector('#new-post-button-big').style.display = 'block';
     document.querySelector('#new-post-button').style.display = 'block';
+    }
     get_posts("all");
     localStorage.setItem('pagename','home');
     localStorage.setItem('target_username','');
@@ -211,18 +219,20 @@ function show_userpage(target_username){
     document.querySelector("#feed-banner").innerHTML = `Posts by ${target_username}`;
     document.querySelector("#user-page-banner").innerHTML = `Networker: ${target_username}`;
     document.querySelector('#loader').style.display = 'block';
-    document.querySelector('#new-post-button-big').style.display = 'none';
-    document.querySelector('#new-post-button').style.display = 'none';
     document.querySelector('#user-page-elements').style.display = 'block';
     username = localStorage.getItem('username')
-    if (target_username === username) {
-        document.querySelector('#user-dashboard-button').style.display = 'none';
-    }else{
-        document.querySelector('#user-dashboard-button').style.display = 'block';
-    }
     console.log(`current: ${username} viewing: ${target_username}`);
+    if (document.querySelector('#current_username').value !== ""){
+        document.querySelector('#new-post-button-big').style.display = 'none';
+        document.querySelector('#new-post-button').style.display = 'none';
+        if (target_username === username) {
+            document.querySelector('#user-dashboard-button').style.display = 'none';
+        }else{
+            document.querySelector('#user-dashboard-button').style.display = 'block';
+        }
+        get_follow_status(username, target_username); 
+    }
     get_user(target_username);
-    get_follow_status(username, target_username); 
     get_posts(target_username);
     document.querySelector('#all-posts-feed').style.display = 'block';
     document.querySelector('#loader').style.display = 'none';

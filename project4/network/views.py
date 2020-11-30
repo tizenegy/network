@@ -128,7 +128,6 @@ def follow(request):
             )
 
 @csrf_exempt
-@login_required
 def follow_status(request, username, target_username):
     if request.method == "GET":
         from_user = User.objects.get(username__contains = username)
@@ -151,7 +150,6 @@ def follow_status(request, username, target_username):
             )
 
 @csrf_exempt
-@login_required
 def feed(request, feed_filter):
     if request.method != "GET":
         return JsonResponse(
@@ -174,7 +172,6 @@ def feed(request, feed_filter):
     return JsonResponse(json_response, safe=False)
 
 @csrf_exempt
-@login_required
 def user(request, username):
     if request.method != "GET":
         return JsonResponse(
