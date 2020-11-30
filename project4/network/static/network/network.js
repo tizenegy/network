@@ -100,6 +100,10 @@ async function send_post(){
 
 function get_posts(feed_filter){
     document.querySelector('#all-posts-feed-inner').innerHTML = "";
+    if (feed_filter === "userfeed"){
+        feed_filter = `${feed_filter}-${localStorage.getItem("username")}`;
+    }
+    console.log(feed_filter);
     fetch(`/posts/${feed_filter}`)
     .then(response => response.json())
     .then(posts => {
@@ -254,7 +258,7 @@ function show_following_feed(){
         document.querySelector('#new-post-button-big').style.display = 'none';
         document.querySelector('#new-post-button').style.display = 'none';
     }
-    get_posts("all");
+    get_posts("userfeed");
     document.querySelector('#all-posts-feed').style.display = 'block';
     document.querySelector('#loader').style.display = 'none';
     scroll(0,0);

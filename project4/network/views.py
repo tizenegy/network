@@ -159,9 +159,19 @@ def feed(request, feed_filter):
 
     if feed_filter == "all":
         data = Post.objects.all()
-    elif (User.objects.get(username__contains = feed_filter)):
+    elif (User.objects.filter(username__contains = feed_filter).exists()):
         op = User.objects.get(username__contains = feed_filter)
         data = Post.objects.filter(op = op)
+    elif ("userfeed-" in feed_filter):
+        split_list = feed_filter.split("-", 1)
+        username = split_list[1]
+        # username->user-obj->
+        user = User.objects.get(username=username)
+        target_users = user.following.all()
+#        relationships = Following.objects.filter(from_User_id=user)
+#        target_users = User.objects.filter()
+        data = Post.objects.filter(op__in = target_users)
+
     else:
         return JsonResponse(
             {"error": "Invalid filter parameter."}, 
