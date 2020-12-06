@@ -22,12 +22,14 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("visibility done");
 
     // load content
-    get_posts("all");
+    get_posts("all", 1);
 
     // set local storage
     localStorage.setItem('pagename', 'home');
     localStorage.setItem('username', document.querySelector('#current_username').value);
     localStorage.setItem('target_username', '');
+    localStorage.setItem('posts_per_page', 10);
+    console.log(localStorage.getItem('posts_per_page'));
     console.log("getting posts done");
     
     // buttons and links
@@ -57,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
             send_post();
             cancel_button = document.querySelector('#cancel-new-post-modal');
             cancel_button.click();
-            setTimeout(() =>  get_posts("all"), 3000);
+            setTimeout(() =>  get_posts("all", 1), 3000);
             setTimeout(() =>  document.querySelector('#loader').style.display = 'none', 3000);
         });
     }
@@ -98,16 +100,14 @@ async function send_post(){
     document.querySelector('#loader').style.display = 'block';
 }
 
-function get_posts(feed_filter){
+function get_posts(feed_filter, page_number){
     document.querySelector('#all-posts-feed-inner').innerHTML = "";
     if (feed_filter === "userfeed"){
         feed_filter = `${feed_filter}-${localStorage.getItem("username")}`;
     }
     console.log(feed_filter);
-    // fetch(`/posts/${feed_filter}`)
-    page = 1
-    posts_per_page = 10
-    fetch(`/posts/${feed_filter}?page=${page}&ppp=${posts_per_page}`)
+    ppp = localStorage.getItem('posts_per_page');
+    fetch(`/posts/${feed_filter}?page=${page_number}&ppp=${ppp}`)
     .then(response => response.json())
     .then(posts => {
         console.log(posts);
@@ -122,7 +122,6 @@ function get_posts(feed_filter){
                 const wrapper = document.createElement('div');
                 const card = document.createElement('div');
                 const card_body = document.createElement('div');
-                // wrapper.className = "col-xs-12 col-sm-8 col-md-8 col-lg-8";
                 card.className = 'card mb-3';
                 card_body.className = 'card-body';
                 card.appendChild(card_body);
@@ -215,7 +214,7 @@ function show_homepage(){
     document.querySelector('#new-post-button-big').style.display = 'block';
     document.querySelector('#new-post-button').style.display = 'block';
     }
-    get_posts("all");
+    get_posts("all", 2);
     localStorage.setItem('pagename','home');
     localStorage.setItem('target_username','');
     document.querySelector('#all-posts-feed').style.display = 'block';
@@ -242,7 +241,7 @@ function show_userpage(target_username){
         get_follow_status(username, target_username); 
     }
     get_user(target_username);
-    get_posts(target_username);
+    get_posts(target_username, 1);
     document.querySelector('#all-posts-feed').style.display = 'block';
     document.querySelector('#loader').style.display = 'none';
     scroll(0,0);
@@ -261,7 +260,7 @@ function show_following_feed(){
         document.querySelector('#new-post-button-big').style.display = 'block';
         document.querySelector('#new-post-button').style.display = 'block';
     }
-    get_posts("userfeed");
+    get_posts("userfeed", 1);
     document.querySelector('#all-posts-feed').style.display = 'block';
     document.querySelector('#loader').style.display = 'none';
     scroll(0,0);

@@ -152,8 +152,8 @@ def follow_status(request, username, target_username):
 
 @csrf_exempt
 def feed(request, feed_filter):
-    page_number = request.GET['page']
-    ppp = request.GET['ppp']
+    page_number = int(request.GET['page'])
+    ppp = int(request.GET['ppp'])
     if request.method != "GET":
         return JsonResponse(
             {"error": "GET request required."}, 
@@ -178,12 +178,10 @@ def feed(request, feed_filter):
             status=400
             )
     # sorting and pagination        
-    ordered = data.order_by("-created").all()
-    pagination = Paginator(ordered,ppp)
-
+    ordered_list = data.order_by("-created").all()
+    pagination = Paginator(ordered_list,ppp)
     page = pagination.get_page(page_number)
     posts = page.object_list
-
     json_response = [post.serialize() for post in posts]
     return JsonResponse(json_response, safe=False)
 
